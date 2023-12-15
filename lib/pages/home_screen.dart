@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:jasarumahku/pages/Aactivity/activityapp.dart';
 import 'package:jasarumahku/pages/service_list/carry_stuff.dart';
 import 'package:jasarumahku/pages/accprofile/profileacc.dart';
+import 'package:jasarumahku/pages/wallet/wallet.dart';
+// ignore: unused_import
+import 'package:jasarumahku/pages/servis_ac/service_ac.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -403,6 +406,11 @@ class _HomePageState extends State<HomePage> {
                           child: TextButton(
                             onPressed: () {
                               // Handle Service AC button press
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => service_ac()),
+                              );
                             },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
@@ -482,9 +490,7 @@ class _HomePageState extends State<HomePage> {
       activityapp(),
 
       //Wallet Page
-      Center(
-        child: Text('Wallet'),
-      ),
+      wallet(),
 
       //Message Page
       Center(

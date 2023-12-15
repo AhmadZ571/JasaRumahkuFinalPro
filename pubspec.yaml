@@ -80,6 +80,8 @@ flutter:
     - assets/images/login_assets/
     - assets/images/ads/
     - assets/images/home_assets/
+    - assets/images/profile/profile.png
+    - assets/images/wallet/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

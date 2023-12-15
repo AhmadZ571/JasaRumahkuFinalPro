@@ -8,8 +8,8 @@ class ProfileAcc extends StatelessWidget {
         Card(
           child: ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  '/assets/images/profile/profile.png'), // Ganti dengan URL gambar Anda
+              backgroundImage: AssetImage(
+                  'assets/images/profile/profile.png'), // Ganti dengan URL gambar Anda
             ),
             title: Text('Jane Doe'),
             subtitle: Text('+62 812 3456 7891'),

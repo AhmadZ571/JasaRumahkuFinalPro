@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jasarumahku/pages/servis_ac/waktu_layanan_ac.dart';
 
 class service_ac extends StatefulWidget {
   @override
@@ -92,6 +93,8 @@ class _ServiceInformationPageState extends State<service_ac> {
               print('AC Tidak Dingin: $isNotCooling');
               print('AC Tidak Dapat Menyala: $wontTurnOn');
               print('Problem Details: $problemDetails');
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Waktu_layanan()));
             },
             style: ElevatedButton.styleFrom(
               primary: Color.fromARGB(255, 244, 59, 46),

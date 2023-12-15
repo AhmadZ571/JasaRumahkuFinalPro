@@ -13,7 +13,11 @@ class Waktu_layanan extends StatelessWidget {
             'Waktu Layanan',
             style: TextStyle(color: Colors.white),
           ),
-          leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () {}),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
           flexibleSpace: Container(
             width: 360,
             height: 71,
@@ -32,73 +36,62 @@ class WaktuLayananAC extends StatefulWidget {
 }
 
 class _WaktuLayananACState extends State<WaktuLayananAC> {
-  DateTime? tanggalSurvey;
-  TimeOfDay? jamSurvey;
   DateTime? tanggalPerbaikan;
   TimeOfDay? jamPerbaikan;
+
+  // Variables to store user selections
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
 
   final format = DateFormat("yyyy-MM-dd HH:mm");
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: ListView(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    buildDateField(
-                      title: 'Tanggal Survey',
-                      value: tanggalSurvey,
-                      onTap: () => pickDate(context, isTanggalSurvey: true),
-                    ),
-                    buildTimeField(
-                      title: 'Masukan Jam Survey',
-                      value: jamSurvey,
-                      onTap: () => pickTime(context, isJamSurvey: true),
-                    ),
-                    Divider(),
-                    buildDateField(
-                      title: 'Tanggal Perbaikan',
-                      value: tanggalPerbaikan,
-                      onTap: () => pickDate(context, isTanggalSurvey: false),
-                    ),
-                    buildTimeField(
-                      title: 'Masukan Jam Perbaikan',
-                      value: jamPerbaikan,
-                      onTap: () => pickTime(context, isJamSurvey: false),
-                    ),
-                    SizedBox(height: 20),
-                  ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                buildDateField(
+                  title: 'Tanggal Perbaikan',
+                  value: selectedDate ?? tanggalPerbaikan,
+                  onTap: () => pickDate(context),
                 ),
-              ),
-            ],
+                buildTimeField(
+                  title: 'Masukan Jam Perbaikan',
+                  value: selectedTime ?? jamPerbaikan,
+                  onTap: () => pickTime(context),
+                ),
+                SizedBox(height: 20),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(bottom: 300),
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: ElevatedButton(
-              child: Text(
-                'Selanjutnya',
-                style: TextStyle(color: Colors.white),
-              ),
-              onPressed: () {
-                // Handle button press
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+          Padding(
+            padding: EdgeInsets.only(bottom: 20),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: ElevatedButton(
+                child: Text(
+                  'Selanjutnya',
+                  style: TextStyle(color: Colors.white),
+                ),
+                onPressed: () {
+                  // Handle button press
+                  print('Selected Date: $selectedDate');
+                  print('Selected Time: $selectedTime');
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red,
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -176,8 +169,7 @@ class _WaktuLayananACState extends State<WaktuLayananAC> {
     );
   }
 
-  Future<void> pickDate(BuildContext context,
-      {required bool isTanggalSurvey}) async {
+  Future<void> pickDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -187,17 +179,12 @@ class _WaktuLayananACState extends State<WaktuLayananAC> {
 
     if (pickedDate != null) {
       setState(() {
-        if (isTanggalSurvey) {
-          tanggalSurvey = pickedDate;
-        } else {
-          tanggalPerbaikan = pickedDate;
-        }
+        selectedDate = pickedDate;
       });
     }
   }
 
-  Future<void> pickTime(BuildContext context,
-      {required bool isJamSurvey}) async {
+  Future<void> pickTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -205,41 +192,8 @@ class _WaktuLayananACState extends State<WaktuLayananAC> {
 
     if (pickedTime != null) {
       setState(() {
-        if (isJamSurvey) {
-          jamSurvey = pickedTime;
-        } else {
-          jamPerbaikan = pickedTime;
-        }
+        selectedTime = pickedTime;
       });
     }
-  }
-}
-
-class InputField extends StatelessWidget {
-  final String title;
-  final bool isTime;
-
-  InputField({required this.title, this.isTime = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(top: 16, bottom: 8),
-          child: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-        ),
-        TextField(
-          decoration: InputDecoration(
-            hintText: isTime ? 'HH:MM' : 'DD/MM/YYYY',
-            prefixIcon:
-                isTime ? Icon(Icons.access_time) : Icon(Icons.calendar_today),
-            border: OutlineInputBorder(),
-          ),
-          keyboardType: isTime ? TextInputType.datetime : TextInputType.text,
-        ),
-      ],
-    );
   }
 }
