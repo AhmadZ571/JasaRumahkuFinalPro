@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:jasarumahku/pages/Aactivity/activityapp.dart';
 import 'package:jasarumahku/pages/service_list/carry_stuff.dart';
 import 'package:jasarumahku/pages/accprofile/profileacc.dart';
+<<<<<<< HEAD
 import 'package:jasarumahku/pages/wallet/wallet.dart';
 // ignore: unused_import
+=======
+>>>>>>> 5a85b0633e18f7910c1bc458097e522a3f551f49
 import 'package:jasarumahku/pages/servis_ac/service_ac.dart';
 
 class HomePage extends StatefulWidget {
