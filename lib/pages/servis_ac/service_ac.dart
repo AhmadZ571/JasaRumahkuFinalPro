@@ -16,6 +16,7 @@ class _ServiceInformationPageState extends State<service_ac> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red,
         title: Text(
           'Informasi Layanan',
           style: TextStyle(color: Colors.white),
