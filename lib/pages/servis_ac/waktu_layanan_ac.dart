@@ -9,6 +9,7 @@ class Waktu_layanan extends StatelessWidget {
       title: 'Waktu Layanan AC',
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.red,
           title: Text(
             'Waktu Layanan',
             style: TextStyle(color: Colors.white),

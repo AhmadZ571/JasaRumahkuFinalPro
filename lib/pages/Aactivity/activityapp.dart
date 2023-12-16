@@ -20,8 +20,9 @@ class _ActivityAppState extends State<activityapp> {
           Text(
             'Aktivitas',
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
             ),
           ),
           SizedBox(
@@ -34,15 +35,36 @@ class _ActivityAppState extends State<activityapp> {
               children: {
                 0: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 14),
-                  child: Text('Riwayat'),
+                  child: Text(
+                    'Riwayat',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
                 1: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 14),
-                  child: Text('Berlangsung'),
+                  child: Text(
+                    'Berlangsung',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
                 2: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 14),
-                  child: Text('Dijadwalkan'),
+                  child: Text(
+                    'Dijadwalkan',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
               },
               onValueChanged: (int value) {
