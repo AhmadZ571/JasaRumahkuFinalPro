@@ -7,9 +7,12 @@ class service_ac extends StatefulWidget {
 }
 
 class _ServiceInformationPageState extends State<service_ac> {
-  bool isLeaking = false;
-  bool isNotCooling = false;
+  bool? isLeaking = false;
+  bool? isNotCooling = false;
+  bool? isDusting = false;
   bool wontTurnOn = false;
+  bool isVisible = false;
+  bool isButton = true;
   String problemDetails = ''; // Variable to store text field value
 
   @override
@@ -18,7 +21,7 @@ class _ServiceInformationPageState extends State<service_ac> {
       appBar: AppBar(
         backgroundColor: Colors.red,
         title: Text(
-          'Informasi Layanan',
+          'Detail Masalah',
           style: TextStyle(color: Colors.white),
         ),
         leading: BackButton(),
@@ -28,86 +31,272 @@ class _ServiceInformationPageState extends State<service_ac> {
           decoration: BoxDecoration(color: Color(0xffff0000)),
         ),
       ),
-      body: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: <Widget>[
-          Text(
-            'Pilih Jenis Layanan yang Anda Butuhkan*',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          CheckboxListTile(
-            title: Text('AC Bocor'),
-            value: isLeaking,
-            onChanged: (bool? value) {
-              setState(() {
-                isLeaking = value!;
-              });
-            },
-          ),
-          CheckboxListTile(
-            title: Text('AC Tidak Dingin'),
-            value: isNotCooling,
-            onChanged: (bool? value) {
-              setState(() {
-                isNotCooling = value!;
-              });
-            },
-          ),
-          CheckboxListTile(
-            title: Text('AC Tidak Dapat Menyala'),
-            value: wontTurnOn,
-            onChanged: (bool? value) {
-              setState(() {
-                wontTurnOn = value!;
-              });
-            },
-          ),
-          SizedBox(height: 20),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Color.fromARGB(255, 255, 0, 0),
-                width: 2.0,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 30,
+                left: 30,
+                right: 30,
+                bottom: 25,
               ),
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: TextFormField(
-              maxLines: 3,
-              onChanged: (value) {
-                // Update the variable when the text field value changes
-                setState(() {
-                  problemDetails = value;
-                });
-              },
-              decoration: InputDecoration(
-                labelText: 'Detail Mengenai Masalah Anda*',
-                hintText: 'Contoh: AC Mengeluarkan suara bising dan keras',
-                contentPadding: EdgeInsets.all(8.0),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                child: Container(
+                  height: 300,
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Permasalahan AC 1',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 11,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Apa masalah yang anda alami?',
+                        style: TextStyle(
+                          fontFamily:
+                              'Poppins', // You can customize the style as needed
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      CheckboxListTile(
+                        title: const Text(
+                          'AC Bocor',
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        value: isLeaking,
+                        activeColor: Colors.grey,
+                        tristate: true,
+                        checkColor: Colors.white,
+                        tileColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (newBool) {
+                          setState(() {
+                            isLeaking = newBool;
+                          });
+                        },
+                      ),
+                      CheckboxListTile(
+                        title: const Text(
+                          'AC tidak dingin',
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        value: isNotCooling,
+                        activeColor: Colors.grey,
+                        tristate: true,
+                        checkColor: Colors.white,
+                        tileColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (newBool) {
+                          setState(() {
+                            isNotCooling = newBool;
+                          });
+                        },
+                      ),
+                      CheckboxListTile(
+                        title: const Text(
+                          'AC Berdebu',
+                          style: TextStyle(
+                            fontFamily: 'Nunito',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        value: isDusting,
+                        activeColor: Colors.grey,
+                        tristate: true,
+                        checkColor: Colors.white,
+                        tileColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        onChanged: (newBool) {
+                          setState(() {
+                            isDusting = newBool;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              // Access the selected values and text field value here
-              print('AC Bocor: $isLeaking');
-              print('AC Tidak Dingin: $isNotCooling');
-              print('AC Tidak Dapat Menyala: $wontTurnOn');
-              print('Problem Details: $problemDetails');
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Waktu_layanan()));
-            },
-            style: ElevatedButton.styleFrom(
-              primary: Color.fromARGB(255, 244, 59, 46),
-            ),
-            child: Text(
-              'Selanjutnya',
-              style: TextStyle(
-                color: Colors.white, // Set text color to white
+            Visibility(
+              visible: isButton,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 144),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      isVisible = !isVisible;
+                      isButton = !isButton;
+                    });
+                  },
+                  label: Text('Tambah AC'),
+                  icon: Icon(Icons.add),
+                ),
               ),
             ),
-          ),
-        ],
+            Visibility(
+              visible: isVisible,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 30,
+                  left: 30,
+                  right: 30,
+                  bottom: 25,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  child: Container(
+                    height: 300,
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Permasalahan AC 2',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 11,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          'Apa masalah yang anda alami?',
+                          style: TextStyle(
+                            fontFamily:
+                                'Poppins', // You can customize the style as needed
+                            fontSize: 12,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        CheckboxListTile(
+                          title: const Text(
+                            'AC Bocor',
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          value: isLeaking,
+                          activeColor: Colors.grey,
+                          tristate: true,
+                          checkColor: Colors.white,
+                          tileColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (newBool) {
+                            setState(() {
+                              isLeaking = newBool;
+                            });
+                          },
+                        ),
+                        CheckboxListTile(
+                          title: const Text(
+                            'AC tidak dingin',
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          value: isNotCooling,
+                          activeColor: Colors.grey,
+                          tristate: true,
+                          checkColor: Colors.white,
+                          tileColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (newBool) {
+                            setState(() {
+                              isNotCooling = newBool;
+                            });
+                          },
+                        ),
+                        CheckboxListTile(
+                          title: const Text(
+                            'AC Berdebu',
+                            style: TextStyle(
+                              fontFamily: 'Nunito',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          value: isDusting,
+                          activeColor: Colors.grey,
+                          tristate: true,
+                          checkColor: Colors.white,
+                          tileColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (newBool) {
+                            setState(() {
+                              isDusting = newBool;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Waktu_layanan()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+                  ),
+                  child: Text(
+                    'Selanjutnya',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
