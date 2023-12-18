@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jasarumahku/pages/servis_ac/confirmation_ac.dart';
 
 class Waktu_layanan extends StatelessWidget {
   @override
@@ -83,6 +84,10 @@ class _WaktuLayananACState extends State<WaktuLayananAC> {
                   // Handle button press
                   print('Selected Date: $selectedDate');
                   print('Selected Time: $selectedTime');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ACConfirmation()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
