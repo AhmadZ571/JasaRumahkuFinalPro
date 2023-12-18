@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jasarumahku/pages/maps/osmhome.dart';
+import 'package:jasarumahku/pages/servis_ac/confirmation_ac.dart';
 
 class Waktu_layanan extends StatelessWidget {
   @override
@@ -86,7 +86,7 @@ class _WaktuLayananACState extends State<WaktuLayananAC> {
                   print('Selected Time: $selectedTime');
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => OSMHome()),
+                    MaterialPageRoute(builder: (context) => ACConfirmation()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

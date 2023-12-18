@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jasarumahku/pages/servis_ac/waktu_layanan_ac.dart';
+import 'package:jasarumahku/pages/maps/osmhome.dart';
 
 class service_ac extends StatefulWidget {
   @override
@@ -7,14 +7,58 @@ class service_ac extends StatefulWidget {
 }
 
 class _ServiceInformationPageState extends State<service_ac> {
-  bool? isLeaking = false;
-  bool? isNotCooling = false;
-  bool? isDusting = false;
-  bool wontTurnOn = false;
+  Widget buildCheckboxListTile(
+    String title,
+    bool variableName, {
+    dynamic Function(bool?)? onChanged,
+  }) {
+    return CheckboxListTile(
+      title: Text(
+        title,
+        style: TextStyle(
+          fontFamily: 'Nunito',
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      value: variableName,
+      activeColor: Colors.grey,
+      tristate: true,
+      checkColor: Colors.white,
+      tileColor: Colors.white,
+      controlAffinity: ListTileControlAffinity.leading,
+      onChanged: onChanged ?? (newBool) => setState(() => variableName),
+    );
+  }
+
+  //AC 1
+  bool isLeaking1 = false;
+  bool isLessCooling1 = false;
+  bool isDusting1 = false;
+  bool wontTurnOn1 = false;
+  bool soundIssue1 = false;
+  bool smellIssue1 = false;
+  bool shakingIssue1 = false;
+  bool electricIssue1 = false;
+  bool fanIssue1 = false;
+  bool isNotCooling1 = false;
+
+  //AC 2
+  bool isLeaking2 = false;
+  bool isNotCooling2 = false;
+  bool isDusting2 = false;
+  bool isLessCooling2 = false;
+  bool wontTurnOn2 = false;
+  bool soundIssue2 = false;
+  bool smellIssue2 = false;
+  bool shakingIssue2 = false;
+  bool electricIssue2 = false;
+  bool fanIssue2 = false;
+
   bool isVisible = false;
+
   bool isButton = true;
   String problemDetails = ''; // Variable to store text field value
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +88,7 @@ class _ServiceInformationPageState extends State<service_ac> {
               child: Padding(
                 padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                 child: Container(
-                  height: 300,
+                  height: 630,
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
@@ -76,69 +120,20 @@ class _ServiceInformationPageState extends State<service_ac> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      CheckboxListTile(
-                        title: const Text(
-                          'AC Bocor',
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        value: isLeaking,
-                        activeColor: Colors.grey,
-                        tristate: true,
-                        checkColor: Colors.white,
-                        tileColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (newBool) {
-                          setState(() {
-                            isLeaking = newBool;
-                          });
-                        },
-                      ),
-                      CheckboxListTile(
-                        title: const Text(
-                          'AC tidak dingin',
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        value: isNotCooling,
-                        activeColor: Colors.grey,
-                        tristate: true,
-                        checkColor: Colors.white,
-                        tileColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (newBool) {
-                          setState(() {
-                            isNotCooling = newBool;
-                          });
-                        },
-                      ),
-                      CheckboxListTile(
-                        title: const Text(
-                          'AC Berdebu',
-                          style: TextStyle(
-                            fontFamily: 'Nunito',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        value: isDusting,
-                        activeColor: Colors.grey,
-                        tristate: true,
-                        checkColor: Colors.white,
-                        tileColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        onChanged: (newBool) {
-                          setState(() {
-                            isDusting = newBool;
-                          });
-                        },
-                      ),
+                      buildCheckboxListTile('Kurang dingin', isLessCooling1),
+                      buildCheckboxListTile('Berdebu', isDusting1),
+                      buildCheckboxListTile('Bocor', isLeaking1),
+                      buildCheckboxListTile('Tidak dingin', isNotCooling1),
+                      buildCheckboxListTile('Tidak dapat menyala', wontTurnOn1),
+                      buildCheckboxListTile(
+                          'Terdengar suara bising', soundIssue1),
+                      buildCheckboxListTile('Berbau tidak sedap', smellIssue1),
+                      buildCheckboxListTile(
+                          'Bergetar saat menyala', shakingIssue1),
+                      buildCheckboxListTile(
+                          'Tidak dapat terhubung ke listrik', electricIssue1),
+                      buildCheckboxListTile(
+                          'Kipas AC tidak berputar', fanIssue1),
                     ],
                   ),
                 ),
@@ -151,8 +146,8 @@ class _ServiceInformationPageState extends State<service_ac> {
                 child: ElevatedButton.icon(
                   onPressed: () {
                     setState(() {
-                      isVisible = !isVisible;
                       isButton = !isButton;
+                      isVisible = !isVisible;
                     });
                   },
                   label: Text('Tambah AC'),
@@ -172,7 +167,7 @@ class _ServiceInformationPageState extends State<service_ac> {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                   child: Container(
-                    height: 300,
+                    height: 630,
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -204,69 +199,22 @@ class _ServiceInformationPageState extends State<service_ac> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        CheckboxListTile(
-                          title: const Text(
-                            'AC Bocor',
-                            style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          value: isLeaking,
-                          activeColor: Colors.grey,
-                          tristate: true,
-                          checkColor: Colors.white,
-                          tileColor: Colors.white,
-                          controlAffinity: ListTileControlAffinity.leading,
-                          onChanged: (newBool) {
-                            setState(() {
-                              isLeaking = newBool;
-                            });
-                          },
-                        ),
-                        CheckboxListTile(
-                          title: const Text(
-                            'AC tidak dingin',
-                            style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          value: isNotCooling,
-                          activeColor: Colors.grey,
-                          tristate: true,
-                          checkColor: Colors.white,
-                          tileColor: Colors.white,
-                          controlAffinity: ListTileControlAffinity.leading,
-                          onChanged: (newBool) {
-                            setState(() {
-                              isNotCooling = newBool;
-                            });
-                          },
-                        ),
-                        CheckboxListTile(
-                          title: const Text(
-                            'AC Berdebu',
-                            style: TextStyle(
-                              fontFamily: 'Nunito',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          value: isDusting,
-                          activeColor: Colors.grey,
-                          tristate: true,
-                          checkColor: Colors.white,
-                          tileColor: Colors.white,
-                          controlAffinity: ListTileControlAffinity.leading,
-                          onChanged: (newBool) {
-                            setState(() {
-                              isDusting = newBool;
-                            });
-                          },
-                        ),
+                        buildCheckboxListTile('Kurang dingin', isLessCooling2),
+                        buildCheckboxListTile('Berdebu', isDusting2),
+                        buildCheckboxListTile('Bocor', isLeaking2),
+                        buildCheckboxListTile('Tidak dingin', isNotCooling2),
+                        buildCheckboxListTile(
+                            'Tidak dapat menyala', wontTurnOn2),
+                        buildCheckboxListTile(
+                            'Terdengar suara bising', soundIssue2),
+                        buildCheckboxListTile(
+                            'Berbau tidak sedap', smellIssue2),
+                        buildCheckboxListTile(
+                            'Bergetar saat menyala', shakingIssue2),
+                        buildCheckboxListTile(
+                            'Tidak dapat terhubung ke listrik', electricIssue2),
+                        buildCheckboxListTile(
+                            'Kipas AC tidak berputar', fanIssue2),
                       ],
                     ),
                   ),
@@ -281,7 +229,7 @@ class _ServiceInformationPageState extends State<service_ac> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Waktu_layanan()),
+                      MaterialPageRoute(builder: (context) => OSMHome()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-// ignore: unused_import
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:jasarumahku/pages/maps/location_utils.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 
 class OSMHome extends StatefulWidget {
@@ -10,7 +11,22 @@ class OSMHome extends StatefulWidget {
 }
 
 class _OSMHomeState extends State<OSMHome> {
+  LatLng? _currentPosition;
   String locationaddress = "Pick Location";
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
+  Future<void> _getCurrentLocation() async {
+    _currentPosition = await LocationUtils.getCurrentLocation();
+    if (_currentPosition != null) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,36 +46,17 @@ class _OSMHomeState extends State<OSMHome> {
         // color: Colors.red,
         child: Center(
           child: OpenStreetMapSearchAndPick(
-              center: LatLong(-7.983908, 112.621391),
-              buttonColor: Colors.red,
-              buttonText: 'Selanjutnya',
-              onPicked: (pickedData) {
-                setState(() {
-                  locationaddress = pickedData.addressName;
-                });
-              }),
+            center: LatLong(-7.983908, 112.621391),
+            buttonColor: Colors.red,
+            buttonText: 'Selanjutnya',
+            onPicked: (pickedData) {
+              setState(() {
+                locationaddress = pickedData.addressName;
+              });
+            },
+          ),
         ),
       ),
     );
   }
-}
-
-//modal bottom sheet
-
-void _showModal(BuildContext context) {
-  showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          height: 600,
-          // color: Colors.red,
-          child: Center(
-            child: OpenStreetMapSearchAndPick(
-                center: LatLong(-7.983908, 112.621391),
-                buttonColor: Colors.blue,
-                buttonText: 'Set Current Location',
-                onPicked: (pickedData) {}),
-          ),
-        );
-      });
 }
