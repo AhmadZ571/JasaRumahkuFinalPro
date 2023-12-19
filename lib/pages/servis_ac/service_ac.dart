@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jasarumahku/pages/maps/osmhome.dart';
 
+import 'servis_ac_util.dart';
+
 class service_ac extends StatefulWidget {
   @override
   _ServiceInformationPageState createState() => _ServiceInformationPageState();
@@ -27,7 +29,7 @@ class _ServiceInformationPageState extends State<service_ac> {
       checkColor: Colors.white,
       tileColor: Colors.white,
       controlAffinity: ListTileControlAffinity.leading,
-      onChanged: onChanged ?? (newBool) => setState(() => variableName),
+      onChanged: onChanged,
     );
   }
 
@@ -120,20 +122,40 @@ class _ServiceInformationPageState extends State<service_ac> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      buildCheckboxListTile('Kurang dingin', isLessCooling1),
-                      buildCheckboxListTile('Berdebu', isDusting1),
-                      buildCheckboxListTile('Bocor', isLeaking1),
-                      buildCheckboxListTile('Tidak dingin', isNotCooling1),
-                      buildCheckboxListTile('Tidak dapat menyala', wontTurnOn1),
+                      buildCheckboxListTile('Kurang dingin', isLessCooling1,
+                          onChanged: (value) =>
+                              setState(() => isLessCooling1 = value!)),
+                      buildCheckboxListTile('Berdebu', isDusting1,
+                          onChanged: (value) =>
+                              setState(() => isDusting1 = value!)),
+                      buildCheckboxListTile('Bocor', isLeaking1,
+                          onChanged: (value) =>
+                              setState(() => isLeaking1 = value!)),
+                      buildCheckboxListTile('Tidak dingin', isNotCooling1,
+                          onChanged: (value) =>
+                              setState(() => isNotCooling1 = value!)),
+                      buildCheckboxListTile('Tidak dapat menyala', wontTurnOn1,
+                          onChanged: (value) =>
+                              setState(() => wontTurnOn1 = value!)),
                       buildCheckboxListTile(
-                          'Terdengar suara bising', soundIssue1),
-                      buildCheckboxListTile('Berbau tidak sedap', smellIssue1),
+                          'Terdengar suara bising', soundIssue1,
+                          onChanged: (value) =>
+                              setState(() => soundIssue1 = value!)),
+                      buildCheckboxListTile('Berbau tidak sedap', smellIssue1,
+                          onChanged: (value) =>
+                              setState(() => smellIssue1 = value!)),
                       buildCheckboxListTile(
-                          'Bergetar saat menyala', shakingIssue1),
+                          'Bergetar saat menyala', shakingIssue1,
+                          onChanged: (value) =>
+                              setState(() => shakingIssue1 = value!)),
                       buildCheckboxListTile(
-                          'Tidak dapat terhubung ke listrik', electricIssue1),
+                          'Tidak dapat terhubung ke listrik', electricIssue1,
+                          onChanged: (value) =>
+                              setState(() => electricIssue1 = value!)),
                       buildCheckboxListTile(
-                          'Kipas AC tidak berputar', fanIssue1),
+                          'Kipas AC tidak berputar', fanIssue1,
+                          onChanged: (value) =>
+                              setState(() => fanIssue1 = value!)),
                     ],
                   ),
                 ),
@@ -199,22 +221,41 @@ class _ServiceInformationPageState extends State<service_ac> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        buildCheckboxListTile('Kurang dingin', isLessCooling2),
-                        buildCheckboxListTile('Berdebu', isDusting2),
-                        buildCheckboxListTile('Bocor', isLeaking2),
-                        buildCheckboxListTile('Tidak dingin', isNotCooling2),
+                        buildCheckboxListTile('Kurang dingin', isLessCooling2,
+                            onChanged: (value) =>
+                                setState(() => isLessCooling2 = value!)),
+                        buildCheckboxListTile('Berdebu', isDusting2,
+                            onChanged: (value) =>
+                                setState(() => isDusting2 = value!)),
+                        buildCheckboxListTile('Bocor', isLeaking2,
+                            onChanged: (value) =>
+                                setState(() => isLeaking2 = value!)),
+                        buildCheckboxListTile('Tidak dingin', isNotCooling2,
+                            onChanged: (value) =>
+                                setState(() => isNotCooling2 = value!)),
                         buildCheckboxListTile(
-                            'Tidak dapat menyala', wontTurnOn2),
+                            'Tidak dapat menyala', wontTurnOn2,
+                            onChanged: (value) =>
+                                setState(() => wontTurnOn2 = value!)),
                         buildCheckboxListTile(
-                            'Terdengar suara bising', soundIssue2),
+                            'Terdengar suara bising', soundIssue2,
+                            onChanged: (value) =>
+                                setState(() => soundIssue2 = value!)),
+                        buildCheckboxListTile('Berbau tidak sedap', smellIssue2,
+                            onChanged: (value) =>
+                                setState(() => smellIssue2 = value!)),
                         buildCheckboxListTile(
-                            'Berbau tidak sedap', smellIssue2),
+                            'Bergetar saat menyala', shakingIssue2,
+                            onChanged: (value) =>
+                                setState(() => shakingIssue2 = value!)),
                         buildCheckboxListTile(
-                            'Bergetar saat menyala', shakingIssue2),
+                            'Tidak dapat terhubung ke listrik', electricIssue2,
+                            onChanged: (value) =>
+                                setState(() => electricIssue2 = value!)),
                         buildCheckboxListTile(
-                            'Tidak dapat terhubung ke listrik', electricIssue2),
-                        buildCheckboxListTile(
-                            'Kipas AC tidak berputar', fanIssue2),
+                            'Kipas AC tidak berputar', fanIssue2,
+                            onChanged: (value) =>
+                                setState(() => fanIssue2 = value!)),
                       ],
                     ),
                   ),
@@ -227,6 +268,38 @@ class _ServiceInformationPageState extends State<service_ac> {
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton(
                   onPressed: () {
+                    //AC 1
+                    List<String> selectedIssuesAC1 =
+                        ACServiceUtil.getSelectedIssuesForAC(
+                      isLessCooling1,
+                      isDusting1,
+                      isLeaking1,
+                      isNotCooling1,
+                      wontTurnOn1,
+                      soundIssue1,
+                      smellIssue1,
+                      shakingIssue1,
+                      electricIssue1,
+                      fanIssue1,
+                    );
+
+                    //AC 2
+                    List<String> selectedIssuesAC2 =
+                        ACServiceUtil.getSelectedIssuesForAC(
+                      isLessCooling2,
+                      isDusting2,
+                      isLeaking2,
+                      isNotCooling2,
+                      wontTurnOn2,
+                      soundIssue2,
+                      smellIssue2,
+                      shakingIssue2,
+                      electricIssue2,
+                      fanIssue2,
+                    );
+
+                    print('AC 1 Selected Issues: $selectedIssuesAC1');
+                    print('AC 2 Selected Issues: $selectedIssuesAC2');
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => OSMHome()),
