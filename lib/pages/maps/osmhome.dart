@@ -3,8 +3,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jasarumahku/pages/maps/location_utils.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 
+import '../servis_ac/confirmation_ac.dart';
+
 class OSMHome extends StatefulWidget {
-  const OSMHome({super.key});
+  final List<String> selectedIssuesAC1;
+  final List<String> selectedIssuesAC2;
+  OSMHome({
+    required this.selectedIssuesAC1,
+    required this.selectedIssuesAC2,
+  });
 
   @override
   State<OSMHome> createState() => _OSMHomeState();
@@ -50,9 +57,21 @@ class _OSMHomeState extends State<OSMHome> {
             buttonColor: Colors.red,
             buttonText: 'Selanjutnya',
             onPicked: (pickedData) {
-              setState(() {
-                locationaddress = pickedData.addressName;
-              });
+              setState(
+                () {
+                  locationaddress = pickedData.addressName;
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ACConfirmation(
+                        locationAddress: locationaddress,
+                        selectedIssuesAC1: widget.selectedIssuesAC1,
+                        selectedIssuesAC2: widget.selectedIssuesAC2,
+                      ),
+                    ),
+                  );
+                },
+              );
             },
           ),
         ),

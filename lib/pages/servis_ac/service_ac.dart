@@ -302,7 +302,10 @@ class _ServiceInformationPageState extends State<service_ac> {
                     print('AC 2 Selected Issues: $selectedIssuesAC2');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OSMHome()),
+                      MaterialPageRoute(
+                          builder: (context) => OSMHome(
+                              selectedIssuesAC1: selectedIssuesAC1,
+                              selectedIssuesAC2: selectedIssuesAC2)),
                     );
                   },
                   style: ElevatedButton.styleFrom(
