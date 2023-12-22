@@ -475,28 +475,45 @@ class _HomePageSectionState extends State<HomePageSection> {
             ),
           ),
         ),
+        // Row to contain two images side by side
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/home_assets/fitur1.png',
+              width: 166,
+              height: 157,
+            ),
+            Image.asset(
+              'assets/images/home_assets/fitur2.png',
+              width: 166,
+              height: 157,
+            ),
+          ],
+        ),
         Container(
-            alignment: Alignment.bottomRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Visibility(
-                  visible: true, // Always visible
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isVisible = !isVisible; // Update visibility state
-                      });
-                    },
-                    icon: Image(
-                      image: AssetImage(
-                          'assets/images/home_assets/ask_service.png'),
-                    ),
+          alignment: Alignment.bottomRight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Visibility(
+                visible: true, // Always visible
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isVisible = !isVisible; // Update visibility state
+                    });
+                  },
+                  icon: Image(
+                    image:
+                        AssetImage('assets/images/home_assets/ask_service.png'),
                   ),
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

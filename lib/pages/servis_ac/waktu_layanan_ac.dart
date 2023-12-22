@@ -80,9 +80,30 @@ class _WaktuLayananACState extends State<WaktuLayananAC> {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
-                  // Handle button press
-                  print('Selected Date: $selectedDate');
-                  print('Selected Time: $selectedTime');
+                  if (selectedDate == null && selectedTime == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text('Masukkan tanggal dan waktu terlebih dahulu'),
+                      ),
+                    );
+                  } else if (selectedDate == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Masukkan tanggal terlebih dahulu'),
+                      ),
+                    );
+                  } else if (selectedTime == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Masukkan waktu terlebih dahulu'),
+                      ),
+                    );
+                  } else {
+                    // Handle button press
+                    print('Selected Date: $selectedDate');
+                    print('Selected Time: $selectedTime');
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,

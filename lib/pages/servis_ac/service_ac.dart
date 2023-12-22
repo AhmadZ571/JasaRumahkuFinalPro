@@ -297,16 +297,28 @@ class _ServiceInformationPageState extends State<service_ac> {
                       electricIssue2,
                       fanIssue2,
                     );
-
-                    print('AC 1 Selected Issues: $selectedIssuesAC1');
-                    print('AC 2 Selected Issues: $selectedIssuesAC2');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
+                    if (selectedIssuesAC1.isEmpty &&
+                        selectedIssuesAC2.isEmpty) {
+                      // Show error message if no issues are selected
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content:
+                              Text('Masukkan masalah AC anda terlebih dahulu'),
+                        ),
+                      );
+                    } else {
+                      print('AC 1 Selected Issues: $selectedIssuesAC1');
+                      print('AC 2 Selected Issues: $selectedIssuesAC2');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
                           builder: (context) => OSMHome(
-                              selectedIssuesAC1: selectedIssuesAC1,
-                              selectedIssuesAC2: selectedIssuesAC2)),
-                    );
+                            selectedIssuesAC1: selectedIssuesAC1,
+                            selectedIssuesAC2: selectedIssuesAC2,
+                          ),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red,
