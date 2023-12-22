@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:jasarumahku/pages/servis_ac/service_ac.dart';
 
-class HomePageSection extends StatelessWidget {
+class HomePageSection extends StatefulWidget {
   final int currentAdIndex;
   final CarouselController carouselController;
   final List<Map<String, dynamic>> adItems;
@@ -14,7 +15,14 @@ class HomePageSection extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<HomePageSection> createState() => _HomePageSectionState();
+}
+
+class _HomePageSectionState extends State<HomePageSection> {
+  @override
   Widget build(BuildContext context) {
+    bool isVisible = true;
+
     return Column(
       children: [
         Container(
@@ -52,12 +60,12 @@ class HomePageSection extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: InkWell(
                     onTap: () {
-                      print(currentAdIndex);
+                      print(widget.currentAdIndex);
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
                       child: CarouselSlider(
-                        items: adItems
+                        items: widget.adItems
                             .map(
                               (item) => Image.asset(
                                 item['image_path'],
@@ -66,7 +74,7 @@ class HomePageSection extends StatelessWidget {
                               ),
                             )
                             .toList(),
-                        carouselController: carouselController,
+                        carouselController: widget.carouselController,
                         options: CarouselOptions(
                           scrollPhysics: const BouncingScrollPhysics(),
                           autoPlay: true,
@@ -86,10 +94,10 @@ class HomePageSection extends StatelessWidget {
                   right: 0,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: adItems.asMap().entries.map((entry) {
+                    children: widget.adItems.asMap().entries.map((entry) {
                       return GestureDetector(
                         onTap: () =>
-                            carouselController.animateToPage(entry.key),
+                            widget.carouselController.animateToPage(entry.key),
                         child: Container(
                           width: 8,
                           height: 8,
@@ -98,7 +106,7 @@ class HomePageSection extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: currentAdIndex == entry.key
+                            color: widget.currentAdIndex == entry.key
                                 ? Colors.red
                                 : Colors.grey,
                           ),
@@ -379,7 +387,11 @@ class HomePageSection extends StatelessWidget {
                         width: 62,
                         child: TextButton(
                           onPressed: () {
-                            // Handle Service AC button press
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => service_ac()),
+                            );
                           },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
@@ -463,6 +475,28 @@ class HomePageSection extends StatelessWidget {
             ),
           ),
         ),
+        Container(
+            alignment: Alignment.bottomRight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Visibility(
+                  visible: true, // Always visible
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isVisible = !isVisible; // Update visibility state
+                      });
+                    },
+                    icon: Image(
+                      image: AssetImage(
+                          'assets/images/home_assets/ask_service.png'),
+                    ),
+                  ),
+                ),
+              ],
+            )),
       ],
     );
   }
