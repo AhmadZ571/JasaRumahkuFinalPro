@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jasarumahku/pages/servis_ac/confirmation_scheduled.dart';
 
 class Waktu_layanan extends StatelessWidget {
+  final List<String> selectedIssuesAC1;
+  final List<String> selectedIssuesAC2;
+  final String combinedSolutionsAC1;
+  final String locationAddress;
+  final int totalPriceAC1;
+  final String combinedSolutionsAC2;
+  final int totalPriceAC2;
+
+  Waktu_layanan({
+    required this.selectedIssuesAC1,
+    required this.selectedIssuesAC2,
+    required this.combinedSolutionsAC1,
+    required this.locationAddress,
+    required this.totalPriceAC1,
+    required this.combinedSolutionsAC2,
+    required this.totalPriceAC2,
+  });
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,13 +44,38 @@ class Waktu_layanan extends StatelessWidget {
             decoration: BoxDecoration(color: Color(0xffff0000)),
           ),
         ),
-        body: WaktuLayananAC(),
+        body: WaktuLayananAC(
+          selectedIssuesAC1: selectedIssuesAC1,
+          selectedIssuesAC2: selectedIssuesAC2,
+          combinedSolutionsAC1: combinedSolutionsAC1,
+          locationAddress: locationAddress,
+          totalPriceAC1: totalPriceAC1,
+          combinedSolutionsAC2: combinedSolutionsAC2,
+          totalPriceAC2: totalPriceAC2,
+        ),
       ),
     );
   }
 }
 
 class WaktuLayananAC extends StatefulWidget {
+  final List<String> selectedIssuesAC1;
+  final List<String> selectedIssuesAC2;
+  final String combinedSolutionsAC1;
+  final String locationAddress;
+  final int totalPriceAC1;
+  final String combinedSolutionsAC2;
+  final int totalPriceAC2;
+
+  WaktuLayananAC({
+    required this.selectedIssuesAC1,
+    required this.selectedIssuesAC2,
+    required this.combinedSolutionsAC1,
+    required this.locationAddress,
+    required this.totalPriceAC1,
+    required this.combinedSolutionsAC2,
+    required this.totalPriceAC2,
+  });
   @override
   _WaktuLayananACState createState() => _WaktuLayananACState();
 }
@@ -40,7 +84,6 @@ class _WaktuLayananACState extends State<WaktuLayananAC> {
   DateTime? tanggalPerbaikan;
   TimeOfDay? jamPerbaikan;
 
-  // Variables to store user selections
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
 
@@ -103,6 +146,23 @@ class _WaktuLayananACState extends State<WaktuLayananAC> {
                     // Handle button press
                     print('Selected Date: $selectedDate');
                     print('Selected Time: $selectedTime');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ACConfirmation(
+                                selectedIssuesAC1: widget.selectedIssuesAC1,
+                                selectedIssuesAC2: widget.selectedIssuesAC2,
+                                combinedSolutionsAC1:
+                                    widget.combinedSolutionsAC1,
+                                locationAddress: widget.locationAddress,
+                                totalPriceAC1: widget.totalPriceAC1,
+                                combinedSolutionsAC2:
+                                    widget.combinedSolutionsAC2,
+                                totalPriceAC2: widget.totalPriceAC2,
+                                selectedDate: selectedDate,
+                                selectedTime: selectedTime,
+                              )),
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
