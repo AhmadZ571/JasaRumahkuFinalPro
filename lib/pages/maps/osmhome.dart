@@ -8,9 +8,17 @@ import '../servis_ac/confirmation_ac.dart';
 class OSMHome extends StatefulWidget {
   final List<String> selectedIssuesAC1;
   final List<String> selectedIssuesAC2;
+  final String combinedSolutionsAC1;
+  final int totalPriceAC1;
+  final String combinedSolutionsAC2;
+  final int totalPriceAC2;
   OSMHome({
     required this.selectedIssuesAC1,
     required this.selectedIssuesAC2,
+    required this.combinedSolutionsAC1,
+    required this.totalPriceAC1,
+    required this.combinedSolutionsAC2,
+    required this.totalPriceAC2,
   });
 
   @override
@@ -67,6 +75,10 @@ class _OSMHomeState extends State<OSMHome> {
                         locationAddress: locationaddress,
                         selectedIssuesAC1: widget.selectedIssuesAC1,
                         selectedIssuesAC2: widget.selectedIssuesAC2,
+                        combinedSolutionsAC1: widget.combinedSolutionsAC1,
+                        totalPriceAC1: widget.totalPriceAC1,
+                        combinedSolutionsAC2: widget.combinedSolutionsAC2,
+                        totalPriceAC2: widget.totalPriceAC2,
                       ),
                     ),
                   );

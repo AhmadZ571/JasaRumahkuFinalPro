@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:jasarumahku/pages/servis_ac/waktu_layanan_ac.dart';
 
 class ACConfirmation extends StatefulWidget {
-  final String locationAddress;
   final List<String> selectedIssuesAC1;
   final List<String> selectedIssuesAC2;
+  final String combinedSolutionsAC1;
+  final String locationAddress;
+  final int totalPriceAC1;
+  final String combinedSolutionsAC2;
+  final int totalPriceAC2;
 
   ACConfirmation({
-    required this.locationAddress,
     required this.selectedIssuesAC1,
     required this.selectedIssuesAC2,
+    required this.combinedSolutionsAC1,
+    required this.locationAddress,
+    required this.totalPriceAC1,
+    required this.combinedSolutionsAC2,
+    required this.totalPriceAC2,
   });
 
   @override
@@ -94,6 +102,34 @@ class _ACConfirmationState extends State<ACConfirmation> {
                   ),
                 ),
               SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Perbaikan yang akan dilakukan',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
+              ),
+              Text(
+                'AC 1: ' + '${widget.combinedSolutionsAC1}',
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
+              ),
+              Text(
+                'AC 2: ' + '${widget.combinedSolutionsAC2}',
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
+              ),
+              SizedBox(height: 10),
+              SizedBox(
                 height: 20,
               ),
               Text(
@@ -112,6 +148,46 @@ class _ACConfirmationState extends State<ACConfirmation> {
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                 ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Divider(
+                // Add a Divider widget here
+                color: Colors.grey, // Choose your preferred color for the line
+                thickness: 1.0, // Adjust the thickness of the line
+                height: 20, // Adjust the height between the text and the line
+              ),
+              Text(
+                'Total Biaya',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  color: Colors.red,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Biaya Servis AC',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'Rp ${widget.totalPriceAC1 + widget.totalPriceAC2}', // Replace with your variable or logic for Letter 2
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
               ),
             ] else ...[
               SizedBox(
@@ -134,7 +210,29 @@ class _ACConfirmationState extends State<ACConfirmation> {
                     fontSize: 12,
                   ),
                 ),
-              SizedBox(height: 20),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                'Perbaikan yang akan dilakukan',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
+              ),
+              Text(
+                '${widget.combinedSolutionsAC1}',
+                style: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                ),
+              ),
+              SizedBox(height: 10),
+              SizedBox(
+                height: 20,
+              ),
               Text(
                 'Alamat',
                 style: TextStyle(
@@ -152,6 +250,50 @@ class _ACConfirmationState extends State<ACConfirmation> {
                   fontSize: 12,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Divider(
+                // Add a Divider widget here
+                color: Colors.grey, // Choose your preferred color for the line
+                thickness: 1.0, // Adjust the thickness of the line
+                height: 20, // Adjust the height between the text and the line
+              ),
+              Text(
+                'Total Biaya',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  color: Colors.red,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Biaya Servis AC',
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    'Rp' +
+                        '${widget.totalPriceAC1}', // Replace with your variable or logic for Letter 2
+                    style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
             ],
             Spacer(), // Pushes buttons to the bottom
             Row(
@@ -161,7 +303,18 @@ class _ACConfirmationState extends State<ACConfirmation> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Waktu_layanan()),
+                      MaterialPageRoute(
+                          builder: (context) => Waktu_layanan(
+                                selectedIssuesAC1: widget.selectedIssuesAC1,
+                                selectedIssuesAC2: widget.selectedIssuesAC2,
+                                combinedSolutionsAC1:
+                                    widget.combinedSolutionsAC1,
+                                locationAddress: widget.locationAddress,
+                                totalPriceAC1: widget.totalPriceAC1,
+                                combinedSolutionsAC2:
+                                    widget.combinedSolutionsAC2,
+                                totalPriceAC2: widget.totalPriceAC2,
+                              )),
                     );
                   },
                   imagePath:
@@ -170,8 +323,8 @@ class _ACConfirmationState extends State<ACConfirmation> {
                 SizedBox(width: 10), // Adjust the spacing between buttons
                 MyButton(
                   onTap: () {
-                    // Handle button press
-                    print('Button Pressed');
+                    showAlert(context, 'Pesanan Berhasil',
+                        'Cek Pesananmu dalam Aktivitas', 'Kembali');
                   },
                   text: 'Pesan Sekarang',
                   width: 255,
@@ -251,4 +404,64 @@ class MyButton extends StatelessWidget {
       ),
     );
   }
+}
+
+void showAlert(
+    BuildContext context, String title, String message, String buttonText) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+        contentPadding: EdgeInsets.all(0),
+        content: Container(
+          width: 329.0,
+          height: 379.0,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  decoration:
+                      BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+                  child: Image.asset(
+                      'assets/images/home_assets/complete_order.png'),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'Poppins',
+                  )),
+              Text(message,
+                  style: TextStyle(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16)),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  buttonText,
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

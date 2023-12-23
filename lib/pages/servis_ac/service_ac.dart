@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:jasarumahku/pages/maps/osmhome.dart';
-
 import 'servis_ac_util.dart';
 
 class service_ac extends StatefulWidget {
@@ -9,6 +10,41 @@ class service_ac extends StatefulWidget {
 }
 
 class _ServiceInformationPageState extends State<service_ac> {
+  Future<Map<String, dynamic>> getRecommendations(
+      List<String> selectedIssues) async {
+    try {
+      String apiUrl = "http://10.0.2.2:5000/recommendations";
+
+      Map<String, dynamic> requestBody = {
+        "user_inputs": selectedIssues,
+      };
+
+      String jsonBody = jsonEncode(requestBody);
+
+      http.Response response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: jsonBody,
+      );
+
+      print("Request body: $jsonBody"); // Log the request body
+
+      if (response.statusCode == 200) {
+        print("Response body: ${response.body}"); // Log the response body
+        return jsonDecode(response.body);
+      } else {
+        print("Error: ${response.statusCode}");
+        print("Response body: ${response.body}");
+        throw Exception("Error: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error: $e");
+      throw Exception("Error: $e");
+    }
+  }
+
   Widget buildCheckboxListTile(
     String title,
     bool variableName, {
@@ -33,7 +69,7 @@ class _ServiceInformationPageState extends State<service_ac> {
     );
   }
 
-  //AC 1
+  // AC 1
   bool isLeaking1 = false;
   bool isLessCooling1 = false;
   bool isDusting1 = false;
@@ -45,7 +81,7 @@ class _ServiceInformationPageState extends State<service_ac> {
   bool fanIssue1 = false;
   bool isNotCooling1 = false;
 
-  //AC 2
+  // AC 2
   bool isLeaking2 = false;
   bool isNotCooling2 = false;
   bool isDusting2 = false;
@@ -58,9 +94,9 @@ class _ServiceInformationPageState extends State<service_ac> {
   bool fanIssue2 = false;
 
   bool isVisible = false;
-
   bool isButton = true;
   String problemDetails = ''; // Variable to store text field value
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,8 +151,7 @@ class _ServiceInformationPageState extends State<service_ac> {
                       Text(
                         'Apa masalah yang anda alami?',
                         style: TextStyle(
-                          fontFamily:
-                              'Poppins', // You can customize the style as needed
+                          fontFamily: 'Poppins',
                           fontSize: 12,
                           color: Colors.black,
                           fontWeight: FontWeight.w600,
@@ -214,8 +249,7 @@ class _ServiceInformationPageState extends State<service_ac> {
                         Text(
                           'Apa masalah yang anda alami?',
                           style: TextStyle(
-                            fontFamily:
-                                'Poppins', // You can customize the style as needed
+                            fontFamily: 'Poppins',
                             fontSize: 12,
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
@@ -267,8 +301,9 @@ class _ServiceInformationPageState extends State<service_ac> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton(
-                  onPressed: () {
-                    //AC 1
+                  onPressed: () async {
+                    print("Button Presseed");
+                    // AC 1
                     List<String> selectedIssuesAC1 =
                         ACServiceUtil.getSelectedIssuesForAC(
                       isLessCooling1,
@@ -283,7 +318,7 @@ class _ServiceInformationPageState extends State<service_ac> {
                       fanIssue1,
                     );
 
-                    //AC 2
+                    // AC 2
                     List<String> selectedIssuesAC2 =
                         ACServiceUtil.getSelectedIssuesForAC(
                       isLessCooling2,
@@ -297,6 +332,7 @@ class _ServiceInformationPageState extends State<service_ac> {
                       electricIssue2,
                       fanIssue2,
                     );
+
                     if (selectedIssuesAC1.isEmpty &&
                         selectedIssuesAC2.isEmpty) {
                       // Show error message if no issues are selected
@@ -306,18 +342,101 @@ class _ServiceInformationPageState extends State<service_ac> {
                               Text('Masukkan masalah AC anda terlebih dahulu'),
                         ),
                       );
-                    } else {
-                      print('AC 1 Selected Issues: $selectedIssuesAC1');
-                      print('AC 2 Selected Issues: $selectedIssuesAC2');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OSMHome(
-                            selectedIssuesAC1: selectedIssuesAC1,
-                            selectedIssuesAC2: selectedIssuesAC2,
+                    } else if (selectedIssuesAC2.isNotEmpty &&
+                        selectedIssuesAC1.isEmpty) {
+                      try {
+                        // Call your backend function to get recommendations
+                        Map<String, dynamic> recommendationDataAC2 =
+                            await getRecommendations(selectedIssuesAC2);
+
+                        // Extract data
+                        String combinedSolutionsAC2 =
+                            recommendationDataAC2['combined_solutions'];
+                        int totalPriceAC2 =
+                            recommendationDataAC2['total_price'] * 1000;
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OSMHome(
+                              selectedIssuesAC1: selectedIssuesAC1,
+                              selectedIssuesAC2: selectedIssuesAC2,
+                              combinedSolutionsAC1: "",
+                              totalPriceAC1: 0,
+                              combinedSolutionsAC2: combinedSolutionsAC2,
+                              totalPriceAC2: totalPriceAC2,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } catch (e) {
+                        // Handle errors, if any
+                        print("Error: $e");
+                      }
+                    } else if (selectedIssuesAC1.isNotEmpty &&
+                        selectedIssuesAC2.isEmpty) {
+                      try {
+                        // Call your backend function to get recommendations
+                        Map<String, dynamic> recommendationDataAC1 =
+                            await getRecommendations(selectedIssuesAC1);
+
+                        // Extract data
+                        String combinedSolutionsAC1 =
+                            recommendationDataAC1['combined_solutions'];
+                        int totalPriceAC1 =
+                            recommendationDataAC1['total_price'] * 1000;
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OSMHome(
+                              selectedIssuesAC1: selectedIssuesAC1,
+                              selectedIssuesAC2: selectedIssuesAC2,
+                              combinedSolutionsAC1: combinedSolutionsAC1,
+                              totalPriceAC1: totalPriceAC1,
+                              combinedSolutionsAC2: "",
+                              totalPriceAC2: 0,
+                            ),
+                          ),
+                        );
+                      } catch (e) {
+                        // Handle errors, if any
+                        print("Error: $e");
+                      }
+                    } else {
+                      try {
+                        // Call your backend function to get recommendations
+                        Map<String, dynamic> recommendationDataAC1 =
+                            await getRecommendations(selectedIssuesAC1);
+                        Map<String, dynamic> recommendationDataAC2 =
+                            await getRecommendations(selectedIssuesAC2);
+
+                        // Extract data
+                        String combinedSolutionsAC1 =
+                            recommendationDataAC1['combined_solutions'];
+                        int totalPriceAC1 =
+                            recommendationDataAC1['total_price'] * 1000;
+                        String combinedSolutionsAC2 =
+                            recommendationDataAC2['combined_solutions'];
+                        int totalPriceAC2 =
+                            recommendationDataAC2['total_price'] * 1000;
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OSMHome(
+                              selectedIssuesAC1: selectedIssuesAC1,
+                              selectedIssuesAC2: selectedIssuesAC2,
+                              combinedSolutionsAC1: combinedSolutionsAC1,
+                              totalPriceAC1: totalPriceAC1,
+                              combinedSolutionsAC2: combinedSolutionsAC2,
+                              totalPriceAC2: totalPriceAC2,
+                            ),
+                          ),
+                        );
+                      } catch (e) {
+                        // Handle errors, if any
+                        print("Error: $e");
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(
